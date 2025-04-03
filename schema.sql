@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS hiv_appointments;
+
+USE hiv_appointments;
+
+CREATE TABLE IF NOT EXISTS appointments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  date DATE NOT NULL,
+  time TIME NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_appointment (date, time)
+); 
