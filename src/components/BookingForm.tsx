@@ -9,6 +9,8 @@ import { toast } from 'sonner';
 import { format, startOfToday, isToday } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import emailjs from '@emailjs/browser';
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
 
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '';
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '';
@@ -157,9 +159,9 @@ export default function BookingForm() {
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="space-y-8 max-w-4xl mx-auto p-6">
-      <div className="space-y-4">
-        <Label htmlFor="date" className="text-xl text-center block">Select Date</Label>
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-12">
+      <div className="space-y-6">
+        <Label htmlFor="date" className="text-2xl font-semibold text-center block text-gray-800">Select Date</Label>
         <div className="flex justify-center">
           <Calendar
             mode="single"
@@ -168,10 +170,29 @@ export default function BookingForm() {
               setDate(newDate);
               setSelectedTime('');
             }}
-            className="rounded-lg border-2 border-pink-200 p-4 bg-white shadow-lg"
+            className="rounded-xl border-2 border-pink-200 p-6 bg-white shadow-lg"
             classNames={{
-              day_selected: "bg-pink-500 text-white hover:bg-pink-600",
-              day_today: "bg-pink-100 text-pink-900",
+              months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+              month: "space-y-4",
+              caption: "flex justify-center pt-1 relative items-center",
+              caption_label: "text-lg font-semibold",
+              nav: "space-x-1 flex items-center",
+              nav_button: cn(
+                buttonVariants({ variant: "outline" }),
+                "h-8 w-8 bg-transparent p-0 opacity-50 hover:opacity-100"
+              ),
+              table: "w-full border-collapse space-y-1",
+              head_row: "flex",
+              head_cell: "text-gray-500 rounded-md w-10 font-normal text-[0.9rem]",
+              row: "flex w-full mt-2",
+              cell: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
+              day: "h-10 w-10 p-0 font-normal hover:bg-pink-50 rounded-full",
+              day_selected: "bg-pink-500 text-white hover:bg-pink-600 hover:text-white focus:bg-pink-500 focus:text-white rounded-full",
+              day_today: "bg-pink-100 text-pink-900 rounded-full",
+              day_outside: "text-gray-400 opacity-50",
+              day_disabled: "text-gray-400 opacity-50",
+              day_range_middle: "aria-selected:bg-pink-100 aria-selected:text-pink-900",
+              day_hidden: "invisible",
             }}
             disabled={(date) => {
               const today = startOfToday();
@@ -184,16 +205,18 @@ export default function BookingForm() {
       </div>
 
       {date && (
-        <div className="space-y-4">
-          <Label className="text-xl text-center block">Select Time</Label>
-          <div className="grid grid-cols-4 gap-3 max-w-2xl mx-auto">
+        <div className="space-y-6">
+          <Label className="text-2xl font-semibold text-center block text-gray-800">Select Time</Label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
             {availableSlots.map((time) => (
               <Button
                 key={time}
                 type="button"
                 variant={selectedTime === time ? 'default' : 'outline'}
-                className={`rounded-full text-lg py-6 ${
-                  selectedTime === time ? 'bg-pink-500 hover:bg-pink-600 text-white' : 'hover:bg-pink-100'
+                className={`rounded-full text-base py-6 ${
+                  selectedTime === time 
+                    ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600' 
+                    : 'border-2 border-pink-200 hover:bg-pink-50'
                 }`}
                 onClick={() => setSelectedTime(time)}
               >
@@ -205,29 +228,36 @@ export default function BookingForm() {
       )}
 
       {date && selectedTime && (
-        <div className="space-y-4 max-w-md mx-auto">
-          <Label htmlFor="email" className="text-xl text-center block">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="rounded-full text-lg py-6"
-            required
-          />
+        <div className="space-y-6">
+          <Label htmlFor="email" className="text-2xl font-semibold text-center block text-gray-800">Email</Label>
+          <div className="max-w-md mx-auto">
+            <Input
+              id="email"
+              type="email"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="rounded-full text-lg py-6 border-2 border-pink-200 focus:border-pink-500 focus:ring-pink-500"
+              required
+            />
+          </div>
         </div>
       )}
 
       {date && selectedTime && email && (
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto pt-4">
           <Button
             type="submit"
-            className="w-full rounded-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-lg py-6"
+            className="w-full rounded-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-lg py-6 text-white font-semibold shadow-lg transition-all duration-200 ease-in-out transform hover:scale-[1.02]"
             disabled={isLoading}
           >
             {isLoading ? 'Booking...' : 'Book Appointment'}
           </Button>
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600 bg-pink-50 p-4 rounded-lg">
+              Your privacy is important to us. All information and test results are kept strictly confidential.
+            </p>
+          </div>
         </div>
       )}
     </form>

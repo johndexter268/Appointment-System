@@ -18,7 +18,7 @@ export default function Home() {
               Your health and privacy are our top priorities.
             </p>
             <Link href="/book">
-              <Button className="rounded-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-lg py-6 px-12 text-white">
+              <Button className="rounded-full mt-10 bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-lg py-6 px-12 text-white">
                 Book Appointment
               </Button>
             </Link>

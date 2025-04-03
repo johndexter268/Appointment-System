@@ -75,7 +75,7 @@ function ConfirmationContent() {
           </div>
 
           <Link href="/">
-            <Button className="rounded-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-lg py-6 px-8">
+            <Button className="mt-5 rounded-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-lg py-6 px-8">
               Return to Home
             </Button>
           </Link>
