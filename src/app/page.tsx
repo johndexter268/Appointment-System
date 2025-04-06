@@ -50,8 +50,8 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Learn More Card */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 transform transition-transform hover:scale-105 border-2 border-[#FF69B4] group flex flex-col h-[350px]">
-                <div className="h-12 w-12 bg-[#FF69B4] rounded-xl flex items-center justify-center mb-6">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 transform transition-transform hover:scale-105 border-2 border-[#FF69B4] group flex flex-col h-[450px]">
+                <div className="h-12 w-12 bg-[#FF69B4] rounded-full flex items-center justify-center mb-6">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
@@ -69,27 +69,37 @@ export default function Home() {
               </div>
 
               {/* Contact Us Card */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 transform transition-transform hover:scale-105 border-2 border-[#FF69B4] group flex flex-col h-[350px]">
-                <div className="h-12 w-12 bg-[#FF69B4] rounded-xl flex items-center justify-center mb-6">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 transform transition-transform hover:scale-105 border-2 border-[#FF69B4] group flex flex-col h-[450px]">
+                <div className="h-12 w-12 bg-[#FF69B4] rounded-full flex items-center justify-center mb-6">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-[#FF69B4] mb-4">Contact Us</h2>
-                <p className="text-[#FF69B4]/80 flex-grow">
+                <p className="text-[#FF69B4]/80 mb-2">
                   Need support or have questions? Our caring team is here to help. 
                   Reach out to us anytime through our secure channels.
                 </p>
-                <Link href="mailto:hivelinktestservices@gmail.com" className="mt-6">
-                  <Button variant="outline" className="w-full rounded-xl border-2 border-[#FF69B4] hover:bg-[#FF69B4]/10 text-[#FF69B4] transition-all duration-300">
-                    hivelinktestservices@gmail.com
-                  </Button>
-                </Link>
+                <div className="text-sm text-[#FF69B4]/80 mb-2">
+                  <strong>Address:</strong> ESPASYO Community Center, 3/F Golden Core Ville Bldg., Nueva Villa Subd. (near GSIS), Brgy. Alangilan, Batangas City, Philippines, 4200
+                </div>
+                <div className="space-y-2 mt-auto">
+                  <Link href="mailto:hivelinktestservices@gmail.com" className="block">
+                    <Button variant="outline" className="w-full rounded-xl border-2 border-[#FF69B4] hover:bg-[#FF69B4]/10 text-[#FF69B4] transition-all duration-300 text-sm">
+                      hivelinktestservices@gmail.com
+                    </Button>
+                  </Link>
+                  <Link href="mailto:wagaywayequalityofficial@gmail.com" className="block">
+                    <Button variant="outline" className="w-full rounded-xl border-2 border-[#FF69B4] hover:bg-[#FF69B4]/10 text-[#FF69B4] transition-all duration-300 text-sm">
+                      wagaywayequalityofficial@gmail.com
+                    </Button>
+                  </Link>
+                </div>
               </div>
 
               {/* Our Purpose Card */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 transform transition-transform hover:scale-105 border-2 border-[#FF69B4] group flex flex-col h-[350px]">
-                <div className="h-12 w-12 bg-[#FF69B4] rounded-xl flex items-center justify-center mb-6">
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 transform transition-transform hover:scale-105 border-2 border-[#FF69B4] group flex flex-col h-[450px]">
+                <div className="h-12 w-12 bg-[#FF69B4] rounded-full flex items-center justify-center mb-6">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
@@ -153,7 +163,7 @@ export default function Home() {
                 }
               ].map((feature, index) => (
                 <div key={index} className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-md border-2 border-[#FF69B4]">
-                  <div className="h-12 w-12 bg-[#FF69B4] rounded-xl flex items-center justify-center mb-4">
+                  <div className="h-12 w-12 bg-[#FF69B4] rounded-full flex items-center justify-center mb-4">
                     {feature.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-2 text-[#FF69B4]">{feature.title}</h3>

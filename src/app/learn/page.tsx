@@ -183,6 +183,11 @@ const LearnPage = () => {
           <h2 className="text-2xl font-bold text-[#C43670] mb-4">References</h2>
           <div className="bg-white rounded-2xl shadow-lg p-8 border-2 border-[#FBD9E5]">
             <p className="text-[#C43670]/80 mb-2 italic">
+              LoveYourself PH. (March 2024). HIV Statistics in the Philippines. [Infographic]. Retrieved from
+              Instagram: @loveyourself.ph
+            </p>
+
+            <p className="text-[#C43670]/80 mb-2 italic">
               Odong, C. (2025, January 16). DOH heightens efforts to curb HIV cases in Calabarzon.
             </p>
             <p className="text-[#C43670]/80 mb-4 italic">
@@ -194,11 +199,6 @@ const LearnPage = () => {
             >
               https://pia.gov.ph/doh-heightens-efforts-to-curb-hiv-cases-in-calabarzon/#:~:text=The%20DOH-Center%20for%20Health,individuals%20aged%2015%20to%2024
             </a>
-
-            <p className="text-[#C43670]/80 mb-2 italic">
-              LoveYourself PH. (March 2024). HIV Statistics in the Philippines. [Infographic]. Retrieved from
-              Instagram: @loveyourself.ph
-            </p>
 
             <p className="text-[#C43670]/80 mb-2 italic">
               UNAIDS. (2023). Global HIV & AIDS statistics — Fact sheet. Retrieved from:
