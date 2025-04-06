@@ -65,7 +65,7 @@ export default function AboutPage() {
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-lg font-bold text-[#C43670] mb-1">Janna Mae P. Macale</h3>
+              <h3 className="text-md font-bold text-[#C43670] mb-1">Janna Mae P. Macale</h3>
               <p className="text-[#C43670]/80 text-center text-sm">
               Proponent
               </p>
@@ -79,7 +79,7 @@ export default function AboutPage() {
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-lg font-bold text-[#C43670] mb-1">Carl Marius M. Lacuata</h3>
+              <h3 className="text-md font-bold text-[#C43670] mb-1">Carl Marius M. Lacuata</h3>
               <p className="text-[#C43670]/80 text-center text-sm">
                 Proponent
               </p>
@@ -93,7 +93,7 @@ export default function AboutPage() {
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-lg font-bold text-[#C43670] mb-1">Mariah Altea E. Lacsamana</h3>
+              <h3 className="text-md font-bold text-[#C43670] mb-1">Mariah Altea E. Lacsamana</h3>
               <p className="text-[#C43670]/80 text-center text-sm">
                 Proponent
               </p>
@@ -107,7 +107,7 @@ export default function AboutPage() {
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-lg font-bold text-[#C43670] mb-1">Ponce Erhomar V. Leus</h3>
+              <h3 className="text-md font-bold text-[#C43670] mb-1">Ponce Erhomar V. Leus</h3>
               <p className="text-[#C43670]/80 text-center text-sm">
 
                 Proponent
@@ -122,7 +122,7 @@ export default function AboutPage() {
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-lg font-bold text-[#C43670] mb-1">Genesis U. Llaneras </h3>
+              <h3 className="text-md font-bold text-[#C43670] mb-1">Genesis U. Llaneras </h3>
               <p className="text-[#C43670]/80 text-center text-sm">
                 Proponent
               </p>
@@ -136,7 +136,7 @@ export default function AboutPage() {
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              <h3 className="text-lg font-bold text-[#C43670] mb-1">Justin Agustin</h3>
+              <h3 className="text-md font-bold text-[#C43670] mb-1">Justin Agustin</h3>
               <p className="text-[#C43670]/80 text-center text-sm">
                 Developer
               </p>
