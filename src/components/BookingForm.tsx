@@ -49,12 +49,15 @@ export default function BookingForm() {
   const [selectedTime, setSelectedTime] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [availableSlots, setAvailableSlots] = useState(timeSlots);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   // Fetch available slots when date changes
   useEffect(() => {
     const fetchAvailableSlots = async () => {
       if (!date) return;
       
+      setIsLoadingSlots(true);
       try {
         const response = await fetch(`/api/slots?date=${format(date, 'yyyy-MM-dd')}`);
         const data = await response.json();
@@ -73,6 +76,9 @@ export default function BookingForm() {
         }
       } catch (error) {
         console.error('Error fetching slots:', error);
+        toast.error('Failed to load available time slots. Please try again.');
+      } finally {
+        setIsLoadingSlots(false);
       }
     };
 
@@ -133,7 +139,17 @@ export default function BookingForm() {
 
     setIsLoading(true);
     try {
-      // First, try to book the appointment
+      // First try to send the confirmation email - if this fails, we won't book the appointment
+      try {
+        await sendConfirmationEmail(date, selectedTime, email);
+      } catch (emailError: any) {
+        console.error('Email sending failed:', emailError);
+        toast.error(`Cannot book appointment: Email service unavailable. Please try again later.`);
+        setIsLoading(false);
+        return; // Stop the booking process if email fails
+      }
+
+      // Now book the appointment since email verification passed
       const bookingResponse = await fetch('/api/book', {
         method: 'POST',
         headers: {
@@ -150,15 +166,11 @@ export default function BookingForm() {
         throw new Error('Booking failed');
       }
 
-      // Then, try to send the confirmation email
-      try {
-        await sendConfirmationEmail(date, selectedTime, email);
-        toast.success('Appointment booked and confirmation emails sent!');
-      } catch (emailError: any) {
-        console.error('Email sending failed:', emailError);
-        toast.warning(`Appointment booked but email failed: ${emailError.message || 'Unknown error'}`);
-      }
-
+      // Everything succeeded
+      toast.success('Appointment booked and confirmation emails sent!');
+      
+      // Show redirecting state
+      setIsRedirecting(true);
       router.push(`/confirmation?date=${format(date, 'yyyy-MM-dd')}&time=${selectedTime}&email=${encodeURIComponent(email)}`);
 
     } catch (error) {
@@ -170,6 +182,12 @@ export default function BookingForm() {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-12">
+      {isRedirecting && (
+        <div className="fixed inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C43670]"></div>
+          <p className="mt-4 text-[#C43670] font-medium">Redirecting to your appointment confirmation...</p>
+        </div>
+      )}
       <div className="space-y-6">
         <Label htmlFor="date" className="text-2xl font-semibold text-center block text-[#C43670]">Select Date</Label>
         <div className="flex justify-center">
@@ -217,23 +235,36 @@ export default function BookingForm() {
       {date && (
         <div className="space-y-6">
           <Label className="text-2xl font-semibold text-center block text-[#C43670]">Select Time</Label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
-            {availableSlots.map((time) => (
-              <Button
-                key={time}
-                type="button"
-                variant={selectedTime === time ? 'default' : 'outline'}
-                className={`rounded-full text-base py-6 ${
-                  selectedTime === time 
-                    ? 'bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] text-white hover:from-[#ff66c4] hover:to-[#e14aaa]' 
-                    : 'border-2 border-[#FBD9E5] hover:bg-[#FBD9E5]/20 text-[#C43670]'
-                }`}
-                onClick={() => setSelectedTime(time)}
-              >
-                {time}
-              </Button>
-            ))}
-          </div>
+          
+          {isLoadingSlots ? (
+            <div className="flex flex-col items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#C43670]"></div>
+              <p className="mt-4 text-[#C43670]">Loading available time slots...</p>
+            </div>
+          ) : availableSlots.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+              {availableSlots.map((time) => (
+                <Button
+                  key={time}
+                  type="button"
+                  variant={selectedTime === time ? 'default' : 'outline'}
+                  className={`rounded-full text-base py-6 ${
+                    selectedTime === time 
+                      ? 'bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] text-white hover:from-[#ff66c4] hover:to-[#e14aaa]' 
+                      : 'border-2 border-[#FBD9E5] hover:bg-[#FBD9E5]/20 text-[#C43670]'
+                  }`}
+                  onClick={() => setSelectedTime(time)}
+                >
+                  {time}
+                </Button>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-6">
+              <p className="text-[#C43670] font-medium">No available appointments for this date.</p>
+              <p className="text-[#C43670]/70 mt-2">Please select another date.</p>
+            </div>
+          )}
         </div>
       )}
 
@@ -261,7 +292,12 @@ export default function BookingForm() {
             className="w-full rounded-full bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] hover:from-[#ff66c4] hover:to-[#e14aaa] text-lg py-6 text-white font-semibold shadow-lg transition-all duration-200 ease-in-out transform hover:scale-[1.02]"
             disabled={isLoading}
           >
-            {isLoading ? 'Booking...' : 'Book Appointment'}
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
+                <span>Processing...</span>
+              </div>
+            ) : 'Book Appointment'}
           </Button>
           <div className="mt-6 text-center">
             <p className="text-sm text-[#ff66c4] bg-[#ff8cd3]/30 p-4 rounded-lg">
