@@ -1,18 +1,43 @@
 import BookingForm from '@/components/BookingForm';
+import Image from 'next/image';
 
-export default function BookAppointment() {
+export default function BookPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-pink-50 py-16">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-6 bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text">
-            Book Your Appointment
-          </h1>
-          <p className="text-gray-600 text-center mb-12 text-lg max-w-2xl mx-auto">
-            Schedule your confidential HIV testing appointment. Choose a date and time that works best for you.
-          </p>
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-            <BookingForm />
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'url(/bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+      
+      {/* Content */}
+      <div className="relative z-10 mt-5">
+        <div className="relative w-full max-w-2xl mx-auto h-32 pt-8">
+          <Image
+            src="/logo.png"
+            alt="HiveLink - HIV Testing Services"
+            fill
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </div>
+
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-[#FF69B4] to-[#FF1493] text-transparent bg-clip-text">
+              Book Your Appointment
+            </h1>
+            <p className="text-[#FF69B4] text-center mb-8">
+              Schedule your confidential HIV testing appointment at your preferred time.
+            </p>
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-2 border-[#FF69B4]">
+              <BookingForm />
+            </div>
           </div>
         </div>
       </div>

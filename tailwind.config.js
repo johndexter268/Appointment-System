@@ -51,10 +51,27 @@ module.exports = {
           foreground: "var(--card-foreground)",
         },
       },
+      boxShadow: {
+        rainbow: '0 0 15px rgba(255, 0, 24, 0.3), 0 0 15px rgba(255, 165, 44, 0.3), 0 0 15px rgba(255, 255, 65, 0.3)',
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      animation: {
+        'spin-slow': 'spin 20s linear infinite',
+        'spin-reverse-slow': 'spin-reverse 25s linear infinite',
+      },
+      keyframes: {
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        'spin-reverse': {
+          '0%': { transform: 'rotate(360deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
       },
     },
   },

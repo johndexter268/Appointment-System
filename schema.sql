@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS hiv_appointments;
+CREATE DATABASE IF NOT EXISTS bn09jjz57nzt4758qukk;
 
-USE hiv_appointments;
+USE bn09jjz57nzt4758qukk;
 
 CREATE TABLE IF NOT EXISTS appointments (
   id INT AUTO_INCREMENT PRIMARY KEY,

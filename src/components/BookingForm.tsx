@@ -15,6 +15,7 @@ import { buttonVariants } from '@/components/ui/button';
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '';
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '';
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '';
+const EMAILJS_STAFF_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_STAFF_TEMPLATE_ID || '';
 
 // Initialize EmailJS
 emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -80,29 +81,38 @@ export default function BookingForm() {
 
   const sendConfirmationEmail = async (date: Date, time: string, email: string) => {
     try {
-      const templateParams = {
+      // Send email to client
+      const clientTemplateParams = {
         to_email: email,
         to_name: email.split('@')[0],
         appointment_date: format(date, 'MMMM d, yyyy'),
         appointment_time: time
       };
 
-      console.log('Sending email with:', {
-        serviceId: EMAILJS_SERVICE_ID,
-        templateId: EMAILJS_TEMPLATE_ID,
-        templateParams,
-        publicKey: EMAILJS_PUBLIC_KEY
-      });
+      // Send email to staff
+      const staffTemplateParams = {
+        client_email: email,
+        appointment_date: format(date, 'MMMM d, yyyy'),
+        appointment_time: time
+      };
 
-      const result = await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        templateParams,
-        EMAILJS_PUBLIC_KEY
-      );
+      const [clientResult, staffResult] = await Promise.all([
+        emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          clientTemplateParams,
+          EMAILJS_PUBLIC_KEY
+        ),
+        emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_STAFF_TEMPLATE_ID,
+          staffTemplateParams,
+          EMAILJS_PUBLIC_KEY
+        )
+      ]);
 
-      console.log('Email sent successfully:', result);
-      return result;
+      console.log('Emails sent successfully:', { clientResult, staffResult });
+      return { clientResult, staffResult };
     } catch (error: any) {
       console.error('Failed to send email:', error);
       console.error('Error details:', {
@@ -143,7 +153,7 @@ export default function BookingForm() {
       // Then, try to send the confirmation email
       try {
         await sendConfirmationEmail(date, selectedTime, email);
-        toast.success('Appointment booked and confirmation email sent!');
+        toast.success('Appointment booked and confirmation emails sent!');
       } catch (emailError: any) {
         console.error('Email sending failed:', emailError);
         toast.warning(`Appointment booked but email failed: ${emailError.message || 'Unknown error'}`);
@@ -161,7 +171,7 @@ export default function BookingForm() {
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="space-y-12">
       <div className="space-y-6">
-        <Label htmlFor="date" className="text-2xl font-semibold text-center block text-gray-800">Select Date</Label>
+        <Label htmlFor="date" className="text-2xl font-semibold text-center block text-[#C43670]">Select Date</Label>
         <div className="flex justify-center">
           <Calendar
             mode="single"
@@ -170,28 +180,28 @@ export default function BookingForm() {
               setDate(newDate);
               setSelectedTime('');
             }}
-            className="rounded-xl border-2 border-pink-200 p-6 bg-white shadow-lg"
+            className="rounded-xl border-2 border-[#FBD9E5] p-6 bg-white shadow-lg"
             classNames={{
               months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
               month: "space-y-4",
               caption: "flex justify-center pt-1 relative items-center",
-              caption_label: "text-lg font-semibold",
+              caption_label: "text-lg font-semibold text-[#C43670]",
               nav: "space-x-1 flex items-center",
               nav_button: cn(
                 buttonVariants({ variant: "outline" }),
-                "h-8 w-8 bg-transparent p-0 opacity-50 hover:opacity-100"
+                "h-8 w-8 bg-transparent p-0 opacity-50 hover:opacity-100 border-[#FBD9E5] hover:bg-[#FBD9E5]/20"
               ),
               table: "w-full border-collapse space-y-1",
               head_row: "flex",
-              head_cell: "text-gray-500 rounded-md w-10 font-normal text-[0.9rem]",
+              head_cell: "text-[#C43670] rounded-md w-10 font-normal text-[0.9rem]",
               row: "flex w-full mt-2",
               cell: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20",
-              day: "h-10 w-10 p-0 font-normal hover:bg-pink-50 rounded-full",
-              day_selected: "bg-pink-500 text-white hover:bg-pink-600 hover:text-white focus:bg-pink-500 focus:text-white rounded-full",
-              day_today: "bg-pink-100 text-pink-900 rounded-full",
+              day: "h-10 w-10 p-0 font-normal hover:bg-[#FBD9E5] rounded-full",
+              day_selected: "bg-[#F285AF] text-white hover:bg-[#C43670] hover:text-white focus:bg-[#F285AF] focus:text-white rounded-full",
+              day_today: "bg-[#FBD9E5] text-[#C43670] rounded-full",
               day_outside: "text-gray-400 opacity-50",
               day_disabled: "text-gray-400 opacity-50",
-              day_range_middle: "aria-selected:bg-pink-100 aria-selected:text-pink-900",
+              day_range_middle: "aria-selected:bg-[#FBD9E5] aria-selected:text-[#C43670]",
               day_hidden: "invisible",
             }}
             disabled={(date) => {
@@ -206,7 +216,7 @@ export default function BookingForm() {
 
       {date && (
         <div className="space-y-6">
-          <Label className="text-2xl font-semibold text-center block text-gray-800">Select Time</Label>
+          <Label className="text-2xl font-semibold text-center block text-[#C43670]">Select Time</Label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
             {availableSlots.map((time) => (
               <Button
@@ -215,8 +225,8 @@ export default function BookingForm() {
                 variant={selectedTime === time ? 'default' : 'outline'}
                 className={`rounded-full text-base py-6 ${
                   selectedTime === time 
-                    ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600' 
-                    : 'border-2 border-pink-200 hover:bg-pink-50'
+                    ? 'bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] text-white hover:from-[#ff66c4] hover:to-[#e14aaa]' 
+                    : 'border-2 border-[#FBD9E5] hover:bg-[#FBD9E5]/20 text-[#C43670]'
                 }`}
                 onClick={() => setSelectedTime(time)}
               >
@@ -229,7 +239,7 @@ export default function BookingForm() {
 
       {date && selectedTime && (
         <div className="space-y-6">
-          <Label htmlFor="email" className="text-2xl font-semibold text-center block text-gray-800">Email</Label>
+          <Label htmlFor="email" className="text-2xl font-semibold text-center block text-[#C43670]">Email</Label>
           <div className="max-w-md mx-auto">
             <Input
               id="email"
@@ -237,7 +247,7 @@ export default function BookingForm() {
               placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="rounded-full text-lg py-6 border-2 border-pink-200 focus:border-pink-500 focus:ring-pink-500"
+              className="rounded-full text-lg py-6 border-2 border-[#FBD9E5] focus:border-[#F285AF] focus:ring-[#F285AF] placeholder-[#C43670]/50"
               required
             />
           </div>
@@ -248,13 +258,13 @@ export default function BookingForm() {
         <div className="max-w-md mx-auto pt-4">
           <Button
             type="submit"
-            className="w-full rounded-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-lg py-6 text-white font-semibold shadow-lg transition-all duration-200 ease-in-out transform hover:scale-[1.02]"
+            className="w-full rounded-full bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] hover:from-[#ff66c4] hover:to-[#e14aaa] text-lg py-6 text-white font-semibold shadow-lg transition-all duration-200 ease-in-out transform hover:scale-[1.02]"
             disabled={isLoading}
           >
             {isLoading ? 'Booking...' : 'Book Appointment'}
           </Button>
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600 bg-pink-50 p-4 rounded-lg">
+            <p className="text-sm text-[#ff66c4] bg-[#ff8cd3]/30 p-4 rounded-lg">
               Your privacy is important to us. All information and test results are kept strictly confidential.
             </p>
           </div>

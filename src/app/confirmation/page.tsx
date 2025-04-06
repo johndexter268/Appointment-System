@@ -5,12 +5,43 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+import { pdf } from '@react-pdf/renderer';
+import { AppointmentPDF } from '@/components/AppointmentPDF';
+
+// Dynamically import PDFViewer to avoid SSR issues
+const PDFViewer = dynamic(
+  () => import('@react-pdf/renderer').then(mod => mod.PDFViewer),
+  { ssr: false }
+);
 
 function ConfirmationContent() {
   const searchParams = useSearchParams();
   const date = searchParams.get('date');
   const time = searchParams.get('time');
   const email = searchParams.get('email');
+
+  const handleDownloadPDF = async () => {
+    try {
+      const blob = await pdf(
+        <AppointmentPDF
+          date={date || ''}
+          time={time || ''}
+          email={email || ''}
+        />
+      ).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `appointment-confirmation-${date}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
 
   return (
     <div className="max-w-2xl mx-auto px-4">
@@ -74,11 +105,19 @@ function ConfirmationContent() {
             </p>
           </div>
 
-          <Link href="/">
-            <Button className="mt-5 rounded-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-lg py-6 px-8">
-              Return to Home
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+            <Link href="/">
+              <Button className="rounded-full bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] hover:from-[#ff66c4] hover:to-[#e14aaa] text-lg py-6 px-8">
+                Return to Home
+              </Button>
+            </Link>
+            <Button
+              onClick={handleDownloadPDF}
+              className="rounded-full bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] hover:from-[#ff66c4] hover:to-[#e14aaa] text-lg py-6 px-8 text-white"
+            >
+              Download PDF
             </Button>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
