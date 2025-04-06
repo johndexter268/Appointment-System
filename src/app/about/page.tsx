@@ -117,7 +117,7 @@ export default function AboutPage() {
             <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-[#FBD9E5] flex flex-col items-center">
               <div className="w-32 h-32 rounded-full overflow-hidden mb-3">
                 <img 
-                  src="/genesis.png" 
+                  src="/genesis.PNG" 
                   alt="Genesis Llaneras" 
                   className="w-full h-full object-cover object-center"
                 />
