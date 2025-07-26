@@ -46,7 +46,7 @@ function ConfirmationContent() {
   return (
     <div className="max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 text-center space-y-6">
-        <div className="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto">
+        <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto">
           <svg
             className="w-8 h-8 text-white"
             fill="none"
@@ -62,26 +62,26 @@ function ConfirmationContent() {
           </svg>
         </div>
 
-        <h1 className="text-3xl font-bold text-pink-600">
+        <h1 className="text-3xl font-bold text-blue-400">
           Appointment Confirmed!
         </h1>
 
         <div className="space-y-4 text-lg">
-          <p>Your appointment has been successfully booked for:</p>
-          <div className="bg-pink-50 rounded-lg p-6 space-y-2">
-            <p className="font-semibold">
+          <p className='text-blue-400'>Your appointment has been successfully booked for:</p>
+          <div className="bg-blue-50 rounded-lg p-6 space-y-2">
+            <p className="text-blue-600 font-semibold">
               Date: {date ? format(new Date(date), 'MMMM d, yyyy') : 'N/A'}
             </p>
-            <p className="font-semibold">
+            <p className="text-blue-600 font-semibold">
               Time: {time || 'N/A'}
             </p>
-            <p className="font-semibold">
+            <p className="text-blue-600 font-semibold">
               Email: {email || 'N/A'}
             </p>
           </div>
 
-          <div className="bg-pink-100 rounded-lg p-6 mt-4">
-            <h2 className="text-xl font-semibold text-pink-700 mb-4">
+          <div className="bg-blue-100 rounded-lg p-6 mt-4">
+            <h2 className="text-xl font-semibold text-blue-700 mb-4">
               Important Instructions:
             </h2>
             <ul className="text-left space-y-3 text-gray-700">
@@ -95,8 +95,8 @@ function ConfirmationContent() {
             </ul>
           </div>
 
-          <div className="bg-purple-100 rounded-lg p-6 mt-4">
-            <h2 className="text-xl font-semibold text-purple-700 mb-4">
+          <div className="bg-blue-50 rounded-lg p-6 mt-4">
+            <h2 className="text-xl font-semibold text-zinc-700 mb-4">
               Privacy Notice:
             </h2>
             <p className="text-gray-700 text-left">
@@ -107,13 +107,13 @@ function ConfirmationContent() {
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
             <Link href="/">
-              <Button className="rounded-full bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] hover:from-[#ff66c4] hover:to-[#e14aaa] text-lg py-6 px-8">
+              <Button className="rounded-full bg-gradient-to-r from-[#69a5ff] to-[#14b5ff] hover:from-[#14b5ff] hover:to-[#69a5ff] text-lg py-6 px-8">
                 Return to Home
               </Button>
             </Link>
             <Button
               onClick={handleDownloadPDF}
-              className="rounded-full bg-gradient-to-r from-[#ff8cd3] to-[#ff66c4] hover:from-[#ff66c4] hover:to-[#e14aaa] text-lg py-6 px-8 text-white"
+              className="rounded-full bg-gradient-to-r from-[#69a5ff] to-[#14b5ff] hover:from-[#14b5ff] hover:to-[#69a5ff] text-lg py-6 px-8 text-white"
             >
               Download PDF
             </Button>
@@ -128,14 +128,14 @@ function LoadingState() {
   return (
     <div className="max-w-2xl mx-auto px-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 text-center space-y-6">
-        <div className="w-16 h-16 bg-pink-300 rounded-full animate-pulse mx-auto" />
-        <div className="h-8 bg-pink-100 rounded animate-pulse" />
+        <div className="w-16 h-16 bg-blue-300 rounded-full animate-pulse mx-auto" />
+        <div className="h-8 bg-blue-100 rounded animate-pulse" />
         <div className="space-y-4">
-          <div className="h-4 bg-pink-50 rounded animate-pulse" />
-          <div className="h-32 bg-pink-50 rounded animate-pulse" />
-          <div className="h-48 bg-pink-100 rounded animate-pulse" />
+          <div className="h-4 bg-blue-50 rounded animate-pulse" />
+          <div className="h-32 bg-blue-50 rounded animate-pulse" />
+          <div className="h-48 bg-blue-100 rounded animate-pulse" />
           <div className="h-24 bg-purple-100 rounded animate-pulse" />
-          <div className="h-12 bg-pink-200 rounded-full animate-pulse" />
+          <div className="h-12 bg-blue-200 rounded-full animate-pulse" />
         </div>
       </div>
     </div>
@@ -144,7 +144,7 @@ function LoadingState() {
 
 export default function ConfirmationPage() {
   return (
-    <div className="min-h-screen bg-pink-50 py-12">
+    <div className="min-h-screen bg-blue-50 py-12">
       <Suspense fallback={<LoadingState />}>
         <ConfirmationContent />
       </Suspense>

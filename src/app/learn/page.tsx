@@ -3,7 +3,7 @@ import React from 'react'
 const LearnPage = () => {
   return (
     <div className="min-h-screen relative overflow-hidden" style={{ 
-      backgroundImage: 'url("/bg.png")', 
+      backgroundImage: 'url("/hl-bg.png")', 
       backgroundAttachment: 'fixed',
       backgroundPosition: 'center',
       backgroundSize: 'cover'

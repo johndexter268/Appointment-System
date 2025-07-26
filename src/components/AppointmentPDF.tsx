@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
   section: {
     margin: 10,
     padding: 20,
-    backgroundColor: '#FFF5F9', // Light pink background
+    backgroundColor: '#1472ff', // Light pink background
   },
   appointmentDetails: {
-    backgroundColor: '#FFF0F7', // Slightly darker pink
+    backgroundColor: '#14b5ff', // Slightly darker pink
     padding: 15,
     marginBottom: 20,
     borderRadius: 5,
@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   privacySection: {
-    backgroundColor: '#F3E8FF', // Light purple
+    backgroundColor: '#1472ff', // Light purple
     padding: 15,
     marginTop: 20,
     borderRadius: 5,
   },
   privacyTitle: {
     fontSize: 16,
-    color: '#7E22CE', // Purple
+    color: '#14b5ff', // Purple
     marginBottom: 10,
     fontWeight: 'bold',
   },
