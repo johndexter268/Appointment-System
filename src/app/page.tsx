@@ -22,15 +22,26 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative py-20 overflow-hidden">
           <div className="container mx-auto px-4">
-            <div className="text-center max-w-4xl mx-auto space-y-8">
-              <div className="relative w-full max-w-2xl mx-auto h-40">
-                <Image
-                  src="/hivelink-blue.png"
-                  alt="HiveLink - HIV Testing Services"
-                  fill
-                  style={{ objectFit: 'contain' }}
-                  priority
-                />
+            <div className="text-center max-w-4xl mx-auto space-y-4">
+              <div className="flex justify-center items-center space-x-2">
+                <div className="relative w-40 h-24">
+                  <Image
+                    src="/welogonew.png"
+                    alt="HiveLink - HIV Testing Services"
+                    fill
+                    style={{ objectFit: 'contain' }}
+                    priority
+                  />
+                </div>
+                <div className="relative w-80 h-52">
+                  <Image
+                    src="/hivelink-blue.png"
+                    alt="HiveLink - HIV Testing Services"
+                    fill
+                    style={{ objectFit: 'contain' }}
+                    priority
+                  />
+                </div>
               </div>
               <p className="text-xl text-[#14b5ff] max-w-2xl mx-auto">
                 Confidential, quick, and professional HIV testing in a safe and supportive environment.
